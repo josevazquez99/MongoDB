@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require('cors');
 const app = express();
-const Athelete=require("./models/athelete");
+const Product=require("./models/product");
 require('dotenv').config();
 
 
@@ -20,26 +20,16 @@ main().catch((err) => console.log(err));
 
 app.use(cors());
 app.use(express.json());
-// Datos de ejemplo (lista de usuarios)
-const users = [
-  { id: 1, name: "Usuario 1" },
-  { id: 2, name: "Usuario 2" },
-  { id: 3, name: "Usuario 3" },
-];
-
-// Ruta para obtener la lista de usuarios
-app.get("/users", (req, res) => {
-  res.json(users);
 
 
-});
-app.post("/athelete",async(req,res)=>{
-  const athelete=req.body;
+
+app.post("/product",async(req,res)=>{
+  const product=req.body;
   //validaciones
-  const newAthelete= new Athelete(athelete);
+  const newProduct= new Product(product);
   try{
-    await newAthelete.save();
-    res.status(201).json(newAthelete);
+    await newProduct.save();
+    res.status(201).json(newProduct);
   }catch(error){
     res.status(500).json({message:error});
 
@@ -47,10 +37,10 @@ app.post("/athelete",async(req,res)=>{
 
 })
 
-app.get("/athelete",async(req,res)=>{
+app.get("/product",async(req,res)=>{
   try{
-  const atheletes=await Athelete.find();
-  res.status(200).json(atheletes);
+  const products=await Product.find();
+  res.status(200).json(products);
   }
   catch(error){
     res.status(500).json({message:error});
